@@ -12,18 +12,17 @@
     <link href="css/font-awesome.min.css" rel="stylesheet">
     
     <link href="css/animate-custom.css" rel="stylesheet">
-    
-    
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script type="text/javascript" src="http://ajax.useso.com/ajax/libs/jquery/1.7/jquery.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->
     <script src="js/bootstrap.min.js"></script>
-	
-    <!-- Responsive menu -->
+
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
     
     <script src="js/modernizr.custom.js"></script>
     
     <script src="js/jquery.dlmenu.js"></script>
+    <script src="js/spin.js"></script>
     
     <!-- jQuery (portfolio) -->
     <!--<script src="js/isotope.js"></script>
@@ -89,13 +88,157 @@
 					</div><!-- /dl-menuwrapper -->
         </div>
    </div>
+   <br><br>
+   <div class="noticontainer">
+   	    <ul class="notilist" id="notilistid">
+   	       <li>
+   	          <div class="panel panel-default">
+   	       	  <div class="panel-heading">
+			      <h3 class="panel-title">
+			      </h3>
+			   </div>
+              <div class="panel-body"></div>
+              </div>
+           </li>
+           <li>
+   	          <div class="panel panel-default">
+   	       	  <div class="panel-heading">
+			      <h3 class="panel-title">
+			      </h3>
+			   </div>
+              <div class="panel-body"></div>
+              </div>
+           </li>
+           <li>
+   	          <div class="panel panel-default">
+   	       	  <div class="panel-heading">
+			      <h3 class="panel-title">
+			      </h3>
+			   </div>
+              <div class="panel-body"></div>
+              </div>
+           </li>
+           <li>
+   	          <div class="panel panel-default">
+   	       	  <div class="panel-heading">
+			      <h3 class="panel-title">
+			      </h3>
+			   </div>
+              <div class="panel-body"></div>
+              </div>
+           </li>
+           <li>
+   	          <div class="panel panel-default">
+   	       	  <div class="panel-heading">
+			      <h3 class="panel-title">
+			      </h3>
+			   </div>
+              <div class="panel-body"></div>
+              </div>
+           </li>
+           <li>
+   	          <div class="panel panel-default">
+   	       	  <div class="panel-heading">
+			      <h3 class="panel-title">
+			      </h3>
+			   </div>
+              <div class="panel-body"></div>
+              </div>
+           </li>
+           <li>
+   	          <div class="panel panel-default">
+   	       	  <div class="panel-heading">
+			      <h3 class="panel-title">
+			      </h3>
+			   </div>
+              <div class="panel-body"></div>
+              </div>
+           </li>
+           <li>
+   	          <div class="panel panel-default">
+   	       	  <div class="panel-heading">
+			      <h3 class="panel-title">
+			      </h3>
+			   </div>
+              <div class="panel-body"></div>
+              </div>
+           </li>
+           <li>
+   	          <div class="panel panel-default">
+   	       	  <div class="panel-heading">
+			      <h3 class="panel-title">
+			      </h3>
+			   </div>
+              <div class="panel-body"></div>
+              </div>
+           </li>
+           <li>
+   	          <div class="panel panel-default">
+   	       	  <div class="panel-heading">
+			      <h3 class="panel-title">
+			      </h3>
+			   </div>
+              <div class="panel-body"></div>
+              </div>
+           </li>  
+   	    </ul>
+   	    <div class="w-load"><div class="spin"></div></div>
+   </div>
+   <div class="paginationstyle">
+     <ul class="pagination" id="pagination"></ul>
+     </div>
    <div class="bottomstyle">
 		<p class="bottomtitle">Copyright &copy; 2016.Company name All rights reserved.  破晓团队</p>
    </div>
-    
-    
+   <script type="text/javascript" src="js/jqPaginator.js"></script>
+
    <script type="text/javascript">
-			$(function() {
+	    $(function() {
+			  	$.jqPaginator('#pagination', {
+		        totalPages: 100,
+		        visiblePages: 5,
+		        currentPage: 1,
+		        onPageChange: function (num, type) {
+		        	var spinner = new Spinner({
+					    lines: 10,
+					    length: 6,
+						width: 10,
+						radius: 15,
+						color: '#75c8b9',
+						speed: 1,
+						trail: 38,
+						shadow: false,
+						hwaccel: true, 
+						className: 'spinner',
+						top: '50%',
+						left: '50%'
+					});
+					$(".spin").show();
+					$(".notilist").hide();
+					$(".w-load").show();
+					var target = $('.spin')[0];
+					spinner.spin(target);
+			          $.ajax({
+			            type: "post",
+			            dataType: "JSONP",
+			            complete:function(){
+						spinner.stop();    //用来停止loading 
+						$(".spin").hide();
+						$(".notilist").show();
+						$(".w-load").hide();
+						},
+			            processData: false,
+			            jsonp: "callback",
+			            url: "http://123.207.84.225/index.php?ac=getxinwen&typeid=1&page="+num+"&pagesize=10",
+			            success: function (msg) {
+	                	 $("#notilistid").find("li").each(function (i) {
+	                            $(this).find("h3").text(msg.data.xinwen[i].Title);
+	                	 })                
+	            }
+              });
+
+		     }
+           });
 				
 				$( '#dl-menu' ).dlmenu();
 				
@@ -121,23 +264,7 @@
 				function(){
 					$(this).find('.services-box-2').removeClass('animated fadeInRight');
 				});
-				
-				
-				
-				
-				// Portfolio
-				
-				
-				var $container = $('.portfolioContainer');
-				$container.isotope({
-					filter: '*',
-					animationOptions: {
-						duration: 750,
-						easing: 'linear',
-						queue: false
-					}
-				});
-			 
+
 				$('.portfolioFilter a').click(function(){
 					$('.portfolioFilter .current').removeClass('current');
 					$(this).addClass('current');

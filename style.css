@@ -89,6 +89,29 @@ a.logo {
 	position: relative;
 	}
 
+.paginationstyle{
+        text-align:center;
+        height:25px;
+}
+
+.notilist{
+        padding-left:100px;
+        padding-right:100px; 
+        margin-left: auto;
+        margin-right: auto;
+}
+
+.w-load{
+        width: 100%;
+        height:200px;
+        background:white;
+}
+
+.noticontainer{
+        width:100%;
+        position: relative;
+}
+
 .bottomstyle{
         width: 100%;
         margin-top:150px;
